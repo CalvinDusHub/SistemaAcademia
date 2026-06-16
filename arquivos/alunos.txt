@@ -1,5 +1,5 @@
-Nome: calvin
+Nome: ana
 CPF: 123
-Idade: 16
-Objetivo: pica
-Plano: pegar picas
+Idade: 56
+Objetivo: forca
+Plano: mensal

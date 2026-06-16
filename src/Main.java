@@ -2,10 +2,12 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 import model.Aluno;
+import model.Exercicio;
 import model.Instrutor;
 import model.Matricula;
 import model.Treino;
 import model.Usuario;
+import model.LimparConsole;
 import util.ArquivoUtil;
 
 public class Main {
@@ -25,55 +27,40 @@ public class Main {
         boolean autenticado = false;
 
         while (!autenticado) {
-
             System.out.print("Login: ");
             String loginDigitado = ler.nextLine();
 
             System.out.print("Senha: ");
             String senhaDigitada = ler.nextLine();
 
-            if (usuario.validarLogin(
-                    loginDigitado,
-                    senhaDigitada)) {
-
+            if (usuario.validarLogin(loginDigitado, senhaDigitada)) {
                 autenticado = true;
 
-                System.out.println(
-                        "\nLogin realizado com sucesso!");
-
+                System.out.println("\nLogin realizado com sucesso!");
             } else {
-
                 tentativas++;
 
-                System.out.println(
-                        "\nLogin ou senha inválidos.");
-
+                System.out.println("\nLogin ou senha inválidos.");
                 if (tentativas == 3) {
 
-                    System.out.println(
-                            "\nVocê excedeu o limite de tentativas.");
-
+                    System.out.println("\nVocê excedeu o limite de tentativas.");
                     boolean senhaAlterada = false;
 
                     while (!senhaAlterada) {
 
-                        System.out.print(
-                                "Digite uma nova senha: ");
+                        System.out.print("Digite uma nova senha: ");
 
                         String novaSenha = ler.nextLine();
 
-                        senhaAlterada = usuario.trocarSenha(
-                                novaSenha);
+                        senhaAlterada = usuario.trocarSenha(novaSenha);
 
                         if (!senhaAlterada) {
 
-                            System.out.println(
-                                    "A senha já foi utilizada nas últimas 3 trocas.");
+                            System.out.println("A senha já foi utilizada nas últimas 3 trocas.");
                         }
                     }
 
-                    System.out.println(
-                            "Senha alterada com sucesso.");
+                    System.out.println("Senha alterada com sucesso.");
 
                     tentativas = 0;
                 }
@@ -84,6 +71,8 @@ public class Main {
 
         do {
 
+            LimparConsole.limpar();
+
             System.out.println("\n===== MENU =====");
             System.out.println("1 - Cadastrar Aluno");
             System.out.println("2 - Listar Alunos");
@@ -92,6 +81,7 @@ public class Main {
             System.out.println("5 - Criar Treino");
             System.out.println("6 - Criar Matrícula");
             System.out.println("7 - Relatório Geral");
+            System.out.println("8 - Excluir alunos");
             System.out.println("0 - Sair");
 
             System.out.print("Escolha: ");
@@ -120,21 +110,13 @@ public class Main {
                     System.out.print("Plano: ");
                     String plano = ler.nextLine();
 
-                    Aluno aluno = new Aluno(
-                            nome,
-                            cpf,
-                            idade,
-                            objetivo,
-                            plano);
+                    Aluno aluno = new Aluno(nome, cpf, idade, objetivo, plano);
 
                     alunos.add(aluno);
 
-                    ArquivoUtil.salvar(
-                            "arquivos/alunos.txt",
-                            aluno.toString());
+                    ArquivoUtil.salvar("arquivos/alunos.txt", aluno.toString());
 
-                    System.out.println(
-                            "\nAluno cadastrado com sucesso!");
+                    System.out.println("\nAluno cadastrado com sucesso!");
 
                     break;
 
@@ -142,21 +124,16 @@ public class Main {
 
                     if (alunos.isEmpty()) {
 
-                        System.out.println(
-                                "\nNenhum aluno cadastrado.");
+                        System.out.println("\nNenhum aluno cadastrado.");
 
                     } else {
-
-                        System.out.println(
-                                "\n===== LISTA DE ALUNOS =====");
-
+                        System.out.println("\n===== LISTA DE ALUNOS =====");
                         for (Aluno a : alunos) {
-
                             System.out.println(a);
-                            System.out.println(
-                                    "-------------------");
+                            System.out.println("-------------------");
                         }
                     }
+                    ler.nextLine();
 
                     break;
 
@@ -178,17 +155,11 @@ public class Main {
                     System.out.print("Especialidade: ");
                     String especialidade = ler.nextLine();
 
-                    Instrutor instrutor = new Instrutor(
-                            nomeInstrutor,
-                            cpfInstrutor,
-                            idadeInstrutor,
-                            especialidade);
+                    Instrutor instrutor = new Instrutor(nomeInstrutor, cpfInstrutor, idadeInstrutor, especialidade);
 
                     instrutores.add(instrutor);
 
-                    ArquivoUtil.salvar(
-                            "arquivos/instrutores.txt",
-                            instrutor.toString());
+                    ArquivoUtil.salvar("arquivos/instrutores.txt", instrutor.toString());
 
                     System.out.println("\nInstrutor cadastrado com sucesso!");
 
@@ -198,21 +169,17 @@ public class Main {
 
                     if (instrutores.isEmpty()) {
 
-                        System.out.println(
-                                "\nNenhum instrutor cadastrado.");
+                        System.out.println("\nNenhum instrutor cadastrado.");
 
                     } else {
-
-                        System.out.println(
-                                "\n===== LISTA DE INSTRUTORES =====");
+                        System.out.println("\n===== LISTA DE INSTRUTORES =====");
 
                         for (Instrutor i : instrutores) {
-
                             System.out.println(i);
-                            System.out.println(
-                                    "-------------------");
+                            System.out.println("-------------------");
                         }
                     }
+                    ler.nextLine();
 
                     break;
 
@@ -225,35 +192,56 @@ public class Main {
 
                     Treino treino = new Treino(nomeTreino);
 
+                    System.out.print("Quantos exercícios? ");
+                    int quantidade = ler.nextInt();
+
+                    ler.nextLine();
+
+                    for (int i = 0; i < quantidade; i++) {
+
+                        System.out.println("\nExercício " + (i + 1));
+
+                        System.out.print("Nome: ");
+                        String nomeExercicio = ler.nextLine();
+
+                        System.out.print("Séries: ");
+                        int series = ler.nextInt();
+
+                        System.out.print("Repetições: ");
+                        int repeticoes = ler.nextInt();
+
+                        ler.nextLine();
+
+                        Exercicio exercicio = new Exercicio(
+                                nomeExercicio,
+                                series,
+                                repeticoes);
+
+                        treino.adicionarExercicio(exercicio);
+                    }
+
                     treinos.add(treino);
 
-                    System.out.println(
-                            "\nTreino criado com sucesso!");
+                    System.out.println("\nTreino criado com sucesso!");
 
                     break;
 
                 case 6:
 
                     if (alunos.isEmpty()) {
-
-                        System.out.println(
-                                "\nCadastre um aluno primeiro.");
+                        System.out.println("\nCadastre um aluno primeiro.");
 
                         break;
                     }
 
                     if (instrutores.isEmpty()) {
-
-                        System.out.println(
-                                "\nCadastre um instrutor primeiro.");
+                        System.out.println("\nCadastre um instrutor primeiro.");
 
                         break;
                     }
 
                     if (treinos.isEmpty()) {
-
-                        System.out.println(
-                                "\nCadastre um treino primeiro.");
+                        System.out.println("\nCadastre um treino primeiro.");
 
                         break;
                     }
@@ -265,47 +253,82 @@ public class Main {
 
                     matriculas.add(matricula);
 
-                    ArquivoUtil.salvar(
-                            "arquivos/matriculas.txt",
-                            matricula.toString());
+                    ArquivoUtil.salvar("arquivos/matriculas.txt", matricula.toString());
 
-                    System.out.println(
-                            "\nMatrícula criada com sucesso!");
+                    System.out.println("\nMatrícula criada com sucesso!");
 
+                    ler.nextLine();
                     break;
 
                 case 7:
 
                     if (matriculas.isEmpty()) {
-
-                        System.out.println(
-                                "\nNenhuma matrícula cadastrada.");
+                        System.out.println("\nNenhuma matrícula cadastrada.");
 
                     } else {
-
-                        System.out.println(
-                                "\n===== RELATÓRIO GERAL =====");
+                        System.out.println("\n===== RELATÓRIO GERAL =====");
 
                         for (Matricula m : matriculas) {
 
                             System.out.println(m);
 
-                            System.out.println(
-                                    "========================");
+                            System.out.println("========================");
                         }
                     }
+
+                    ler.nextLine();
+                    break;
+
+                case 8:
+
+                    if (alunos.isEmpty()) {
+                        System.out.println("\nNenhum aluno cadastrado.");
+                        ler.nextLine();
+
+                        break;
+                    }
+
+                    ler.nextLine();
+
+                    System.out.print("Digite o nome do aluno: ");
+                    String nomeExcluir = ler.nextLine();
+
+                    Aluno alunoRemover = null;
+
+                    for (Aluno a : alunos) {
+
+                        if (a.getNome().equalsIgnoreCase(nomeExcluir)) {
+                            alunoRemover = a;
+                            break;
+                        }
+                    }
+
+                    if (alunoRemover != null) {
+
+                        alunos.remove(alunoRemover);
+
+                        System.out.println("\nAluno removido com sucesso!");
+
+                    } else {
+                        System.out.println("\nAluno não encontrado.");
+                        ler.nextLine();
+                    }
+
+                    ler.nextLine();
 
                     break;
 
                 case 0:
-                    System.out.println(
-                            "Encerrando sistema...");
+                    ler.nextLine();
+                    LimparConsole.limpar();
+                    System.out.println("Encerrando sistema...");
+
                     break;
 
                 default:
-                    System.out.println(
-                            "Opção inválida.");
+                    System.out.println("Opção inválida.");
             }
+            ler.nextLine();
 
         } while (opcao != 0);
 

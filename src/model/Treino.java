@@ -29,10 +29,9 @@ public class Treino {
     return exercicios;
   }
 
-  public void adicionarExercicio(
-      Exercicio exercicio) {
-
+  public void adicionarExercicio(Exercicio exercicio) {
     exercicios.add(exercicio);
+
   }
 
   @Override

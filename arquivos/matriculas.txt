@@ -1,0 +1,17 @@
+
+===== MATRÍCULA =====
+Nome: ana
+CPF: 123
+Idade: 56
+Objetivo: forca
+Plano: mensal
+
+Nome: vinicius
+CPF: 123
+Idade: 56
+Especialidade: velho
+
+
+Treino: treino para ana
+supino reto - 5x5
+
