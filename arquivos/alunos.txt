@@ -1,0 +1,5 @@
+Nome: calvin
+CPF: 123
+Idade: 16
+Objetivo: pica
+Plano: pegar picas

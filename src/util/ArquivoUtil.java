@@ -8,23 +8,18 @@ import java.io.IOException;
 
 public class ArquivoUtil {
 
-  public static void salvar(String caminho,
-      String conteudo) {
+  public static void salvar(String caminho, String conteudo) {
 
     try {
 
-      BufferedWriter bw = new BufferedWriter(
-          new FileWriter(caminho, true));
+      BufferedWriter buff = new BufferedWriter(new FileWriter(caminho, true));
+      buff.write(conteudo);
+      buff.newLine();
 
-      bw.write(conteudo);
-      bw.newLine();
-
-      bw.close();
-
+      buff.close();
     } catch (IOException e) {
 
-      System.out.println(
-          "Erro ao salvar arquivo.");
+      System.out.println("Erro ao salvar arquivo: " + e.getMessage());
     }
   }
 
@@ -32,13 +27,10 @@ public class ArquivoUtil {
 
     try {
 
-      BufferedReader br = new BufferedReader(
-          new FileReader(caminho));
-
+      BufferedReader br = new BufferedReader(new FileReader(caminho));
       String linha;
 
       while ((linha = br.readLine()) != null) {
-
         System.out.println(linha);
       }
 
@@ -46,8 +38,7 @@ public class ArquivoUtil {
 
     } catch (IOException e) {
 
-      System.out.println(
-          "Erro ao ler arquivo.");
+      System.out.println("Erro ao ler arquivo: " + e.getMessage());
     }
   }
 }

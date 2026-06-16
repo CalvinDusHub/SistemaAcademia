@@ -6,6 +6,7 @@ import model.Instrutor;
 import model.Matricula;
 import model.Treino;
 import model.Usuario;
+import util.ArquivoUtil;
 
 public class Main {
 
@@ -13,9 +14,7 @@ public class Main {
 
         Scanner ler = new Scanner(System.in);
 
-        Usuario usuario = new Usuario(
-                "calvin",
-                "123");
+        Usuario usuario = new Usuario("calvin", "123");
 
         ArrayList<Aluno> alunos = new ArrayList<>();
         ArrayList<Instrutor> instrutores = new ArrayList<>();
@@ -101,38 +100,201 @@ public class Main {
             switch (opcao) {
 
                 case 1:
+
+                    ler.nextLine();
+
+                    System.out.print("Nome: ");
+                    String nome = ler.nextLine();
+
+                    System.out.print("CPF: ");
+                    String cpf = ler.nextLine();
+
+                    System.out.print("Idade: ");
+                    int idade = ler.nextInt();
+
+                    ler.nextLine();
+
+                    System.out.print("Objetivo: ");
+                    String objetivo = ler.nextLine();
+
+                    System.out.print("Plano: ");
+                    String plano = ler.nextLine();
+
+                    Aluno aluno = new Aluno(
+                            nome,
+                            cpf,
+                            idade,
+                            objetivo,
+                            plano);
+
+                    alunos.add(aluno);
+
+                    ArquivoUtil.salvar(
+                            "arquivos/alunos.txt",
+                            aluno.toString());
+
                     System.out.println(
-                            "Cadastrar aluno");
+                            "\nAluno cadastrado com sucesso!");
+
                     break;
 
                 case 2:
-                    System.out.println(
-                            "Listar alunos");
+
+                    if (alunos.isEmpty()) {
+
+                        System.out.println(
+                                "\nNenhum aluno cadastrado.");
+
+                    } else {
+
+                        System.out.println(
+                                "\n===== LISTA DE ALUNOS =====");
+
+                        for (Aluno a : alunos) {
+
+                            System.out.println(a);
+                            System.out.println(
+                                    "-------------------");
+                        }
+                    }
+
                     break;
 
                 case 3:
-                    System.out.println(
-                            "Cadastrar instrutor");
+
+                    ler.nextLine();
+
+                    System.out.print("Nome: ");
+                    String nomeInstrutor = ler.nextLine();
+
+                    System.out.print("CPF: ");
+                    String cpfInstrutor = ler.nextLine();
+
+                    System.out.print("Idade: ");
+                    int idadeInstrutor = ler.nextInt();
+
+                    ler.nextLine();
+
+                    System.out.print("Especialidade: ");
+                    String especialidade = ler.nextLine();
+
+                    Instrutor instrutor = new Instrutor(
+                            nomeInstrutor,
+                            cpfInstrutor,
+                            idadeInstrutor,
+                            especialidade);
+
+                    instrutores.add(instrutor);
+
+                    ArquivoUtil.salvar(
+                            "arquivos/instrutores.txt",
+                            instrutor.toString());
+
+                    System.out.println("\nInstrutor cadastrado com sucesso!");
+
                     break;
 
                 case 4:
-                    System.out.println(
-                            "Listar instrutores");
+
+                    if (instrutores.isEmpty()) {
+
+                        System.out.println(
+                                "\nNenhum instrutor cadastrado.");
+
+                    } else {
+
+                        System.out.println(
+                                "\n===== LISTA DE INSTRUTORES =====");
+
+                        for (Instrutor i : instrutores) {
+
+                            System.out.println(i);
+                            System.out.println(
+                                    "-------------------");
+                        }
+                    }
+
                     break;
 
                 case 5:
+
+                    ler.nextLine();
+
+                    System.out.print("Nome do treino: ");
+                    String nomeTreino = ler.nextLine();
+
+                    Treino treino = new Treino(nomeTreino);
+
+                    treinos.add(treino);
+
                     System.out.println(
-                            "Criar treino");
+                            "\nTreino criado com sucesso!");
+
                     break;
 
                 case 6:
+
+                    if (alunos.isEmpty()) {
+
+                        System.out.println(
+                                "\nCadastre um aluno primeiro.");
+
+                        break;
+                    }
+
+                    if (instrutores.isEmpty()) {
+
+                        System.out.println(
+                                "\nCadastre um instrutor primeiro.");
+
+                        break;
+                    }
+
+                    if (treinos.isEmpty()) {
+
+                        System.out.println(
+                                "\nCadastre um treino primeiro.");
+
+                        break;
+                    }
+
+                    Matricula matricula = new Matricula(
+                            alunos.get(0),
+                            instrutores.get(0),
+                            treinos.get(0));
+
+                    matriculas.add(matricula);
+
+                    ArquivoUtil.salvar(
+                            "arquivos/matriculas.txt",
+                            matricula.toString());
+
                     System.out.println(
-                            "Criar matrícula");
+                            "\nMatrícula criada com sucesso!");
+
                     break;
 
                 case 7:
-                    System.out.println(
-                            "Relatório geral");
+
+                    if (matriculas.isEmpty()) {
+
+                        System.out.println(
+                                "\nNenhuma matrícula cadastrada.");
+
+                    } else {
+
+                        System.out.println(
+                                "\n===== RELATÓRIO GERAL =====");
+
+                        for (Matricula m : matriculas) {
+
+                            System.out.println(m);
+
+                            System.out.println(
+                                    "========================");
+                        }
+                    }
+
                     break;
 
                 case 0:
